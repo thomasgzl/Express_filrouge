@@ -124,8 +124,8 @@ router.put('/api/joueurs/:name', (req, res) => {
 //10.PUT BOOLEAN
 router.put('/api/joueurs/titular/:name', (req, res) => {
   const namePlayer = req.params.name;
-  const formData = req.body;
-  connection.query('UPDATE barca_players SET titular=1 WHERE name = ?', [formData, namePlayer], (err, res) => {
+
+  connection.query('UPDATE barca_players SET `titular` = 1 ^ `titular` WHERE name = ?', namePlayer, (err, res) => {
     if (err) {
       console.log(err);
       res.status(500).send('Erreur lors de la modification d un joueur titulaire');
@@ -149,9 +149,9 @@ router.delete('/api/joueurs/delete/:id', (req, res) => {
 });
 
 //12.DELETE ENTITÉ = BOOLEAN FALSE
-router.delete('/api/joueurs/delete/titular/:id', (req, res) => {
+router.delete('/api/joueurs/delete/nottitular', (req, res) => {
   const idPlayer = req.params.id;
-  connection.query('DELETE FROM barca_players SET titular=0 WHERE id = ?', idPlayer, (err, res) => {
+  connection.query('DELETE FROM barca_players SET `titular` = 0', idPlayer, (err, res) => {
     if (err) {
       console.log(err);
       res.status(500).send('Erreur lors de la suppresion d un joueur non-titulaire');
